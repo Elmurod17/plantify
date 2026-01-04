@@ -1,5 +1,13 @@
-import { Link } from 'react-router-dom';
-import { Leaf, Instagram, Facebook, Twitter, Mail, MapPin, Phone } from 'lucide-react';
+import { Link } from "react-router-dom";
+import {
+  Leaf,
+  Instagram,
+  Facebook,
+  Twitter,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
 const Footer = () => {
   return (
@@ -16,27 +24,48 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-cream-dark/80 text-sm leading-relaxed">
-              Bringing nature into your home with sustainably grown plants and eco-friendly practices.
+              Bringing nature into your home with sustainably grown plants and
+              eco-friendly practices.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-lg bg-cream/10 flex items-center justify-center hover:bg-leaf/20 transition-colors duration-300"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-display text-lg font-semibold text-cream mb-4">Quick Links</h4>
+            <h4 className="font-display text-lg font-semibold text-cream mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-3">
-              {['Shop All', 'New Arrivals', 'Best Sellers', 'Plant Care', 'Gift Cards'].map((item) => (
+              {[
+                "Shop All",
+                "New Arrivals",
+                "Best Sellers",
+                "Plant Care",
+                "Gift Cards",
+              ].map((item) => (
                 <li key={item}>
-                  <Link to="/shop" className="text-cream-dark/80 hover:text-leaf transition-colors duration-300 text-sm">
+                  <Link
+                    to="/shop"
+                    className="text-cream-dark/80 hover:text-leaf transition-colors duration-300 text-sm"
+                  >
                     {item}
                   </Link>
                 </li>
@@ -45,36 +74,26 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display text-lg font-semibold text-cream mb-4">Categories</h4>
+            <h4 className="font-display text-lg font-semibold text-cream mb-4">
+              Categories
+            </h4>
             <ul className="space-y-3">
-              {['Indoor Plants', 'Outdoor Plants', 'Succulents', 'Flowers', 'Planters'].map((item) => (
+              {[
+                "Indoor Plants",
+                "Outdoor Plants",
+                "Succulents",
+                "Flowers",
+                "Planters",
+              ].map((item) => (
                 <li key={item}>
-                  <Link to="/categories" className="text-cream-dark/80 hover:text-leaf transition-colors duration-300 text-sm">
+                  <Link
+                    to="/categories"
+                    className="text-cream-dark/80 hover:text-leaf transition-colors duration-300 text-sm"
+                  >
                     {item}
                   </Link>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-display text-lg font-semibold text-cream mb-4">Contact Us</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-leaf shrink-0 mt-0.5" />
-                <span className="text-cream-dark/80 text-sm">
-                  123 Green Street<br />
-                  Botanical District, NY 10001
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-leaf shrink-0" />
-                <span className="text-cream-dark/80 text-sm">(555) 123-4567</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-leaf shrink-0" />
-                <span className="text-cream-dark/80 text-sm">hello@plantify.com</span>
-              </li>
             </ul>
           </div>
         </div>
@@ -85,10 +104,16 @@ const Footer = () => {
               © 2026 Plantify. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link to="#" className="text-cream-dark/60 hover:text-cream text-sm transition-colors duration-300">
+              <Link
+                to="#"
+                className="text-cream-dark/60 hover:text-cream text-sm transition-colors duration-300"
+              >
                 Privacy Policy
               </Link>
-              <Link to="#" className="text-cream-dark/60 hover:text-cream text-sm transition-colors duration-300">
+              <Link
+                to="#"
+                className="text-cream-dark/60 hover:text-cream text-sm transition-colors duration-300"
+              >
                 Terms of Service
               </Link>
             </div>
