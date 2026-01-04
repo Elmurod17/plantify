@@ -96,6 +96,32 @@ const Footer = () => {
               ))}
             </ul>
           </div>
+
+          <div>
+            <h4 className="font-display text-lg font-semibold text-cream mb-4">
+              Contact Us
+            </h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-leaf shrink-0 mt-0.5" />
+                <span className="text-cream-dark/80 text-sm">
+                  Coming soon...
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-leaf shrink-0" />
+                <span className="text-cream-dark/80 text-sm">
+                  Coming soon...
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-leaf shrink-0" />
+                <span className="text-cream-dark/80 text-sm">
+                  Coming soon...
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-cream/10">
