@@ -1,61 +1,59 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Search, Menu, X, Leaf, User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useCart } from '@/context/CartContext';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ShoppingCart, Search, Menu, X, Leaf, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { totalItems } = useCart();
   const location = useLocation();
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/shop', label: 'Shop' },
-    { href: '/categories', label: 'Categories' },
-    { href: '/about', label: 'About' },
+    { path: "/", label: "Home" },
+    { path: "/shop", label: "Shop" },
+    { path: "/categories", label: "Categories" },
+    { path: "/about", label: "About" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <header className="border-b bg-background sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-leaf to-leaf-dark flex items-center justify-center shadow-soft group-hover:shadow-card transition-shadow duration-300">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
+        {/* TOP BAR */}
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 bg-leaf rounded-lg flex items-center justify-center">
+              <Leaf className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display text-xl md:text-2xl font-semibold text-forest">
-              Plantify
-            </span>
+            <span className="text-xl font-semibold">Plantify</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          {/* DESKTOP NAV */}
+          <nav className="hidden md:flex gap-6">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  'relative text-sm font-medium transition-colors duration-300 link-underline',
-                  isActive(link.href)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
+                key={link.path}
+                to={link.path}
+                className={`text-sm ${
+                  isActive(link.path)
+                    ? "text-primary font-semibold"
+                    : "text-muted-foreground"
+                }`}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 md:gap-4">
+          {/* ACTIONS */}
+          <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="relative"
+              onClick={() => setSearchOpen(!searchOpen)}
             >
               <Search className="w-5 h-5" />
             </Button>
@@ -70,7 +68,7 @@ const Header = () => {
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="w-5 h-5" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-semibold animate-scale-in">
+                  <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {totalItems}
                   </span>
                 )}
@@ -81,53 +79,46 @@ const Header = () => {
               variant="ghost"
               size="icon"
               className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setMenuOpen(!menuOpen)}
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {menuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
 
-        <div
-          className={cn(
-            'overflow-hidden transition-all duration-300',
-            isSearchOpen ? 'max-h-20 pb-4' : 'max-h-0'
-          )}
-        >
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search for plants..."
-              className="w-full h-12 pl-12 pr-4 rounded-xl bg-secondary border-none focus:ring-2 focus:ring-primary outline-none transition-all duration-300"
-            />
+        {/* SEARCH */}
+        {searchOpen && (
+          <div className="pb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search plants..."
+                className="w-full h-11 pl-10 pr-3 rounded-md border"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
-        <div
-          className={cn(
-            'md:hidden overflow-hidden transition-all duration-300',
-            isMenuOpen ? 'max-h-64 pb-4' : 'max-h-0'
-          )}
-        >
-          <nav className="flex flex-col gap-2">
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <nav className="md:hidden pb-4 flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={cn(
-                  'px-4 py-3 rounded-lg transition-colors duration-300',
-                  isActive(link.href)
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-secondary'
-                )}
+                key={link.path}
+                to={link.path}
+                onClick={() => setMenuOpen(false)}
+                className={`px-3 py-2 rounded-md text-sm ${
+                  isActive(link.path)
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground"
+                }`}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
-        </div>
+        )}
       </div>
     </header>
   );

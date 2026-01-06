@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Leaf, Mail, Lock, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Leaf, Mail, Lock, User, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
@@ -21,23 +21,23 @@ const Auth = () => {
     const newErrors: Record<string, string> = {};
 
     if (!isLogin && !formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = "Please enter a valid email";
     }
 
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = "Password must be at least 8 characters";
     }
 
     if (!isLogin && formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     setErrors(newErrors);
@@ -48,10 +48,10 @@ const Auth = () => {
     e.preventDefault();
     if (validateForm()) {
       toast({
-        title: isLogin ? 'Welcome back! 🌱' : 'Account created! 🌿',
+        title: isLogin ? "Welcome back! 🌱" : "Account created! 🌿",
         description: isLogin
-          ? 'You have successfully logged in.'
-          : 'Welcome to the Plantify family!',
+          ? "You have successfully logged in."
+          : "Welcome to the Plantify family!",
       });
     }
   };
@@ -60,7 +60,7 @@ const Auth = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -82,7 +82,8 @@ const Auth = () => {
               Welcome to Plantify
             </h1>
             <p className="text-cream/80 text-lg max-w-md">
-              Join our community of plant lovers and bring nature into your home.
+              Join our community of plant lovers and bring nature into your
+              home.
             </p>
           </div>
         </div>
@@ -109,12 +110,12 @@ const Auth = () => {
 
           <div className="mb-8">
             <h2 className="font-display text-3xl font-bold text-foreground mb-2">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {isLogin ? "Welcome Back" : "Create Account"}
             </h2>
             <p className="text-muted-foreground">
               {isLogin
-                ? 'Enter your credentials to access your account'
-                : 'Join Plantify and start your plant journey'}
+                ? "Enter your credentials to access your account"
+                : "Join Plantify and start your plant journey"}
             </p>
           </div>
 
@@ -133,8 +134,10 @@ const Auth = () => {
                     onChange={handleChange}
                     placeholder="John Doe"
                     className={cn(
-                      'w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300',
-                      errors.name ? 'border-destructive' : 'border-border focus:border-primary'
+                      "w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300",
+                      errors.name
+                        ? "border-destructive"
+                        : "border-border focus:border-primary"
                     )}
                   />
                 </div>
@@ -157,8 +160,10 @@ const Auth = () => {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   className={cn(
-                    'w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300',
-                    errors.email ? 'border-destructive' : 'border-border focus:border-primary'
+                    "w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300",
+                    errors.email
+                      ? "border-destructive"
+                      : "border-border focus:border-primary"
                   )}
                 />
               </div>
@@ -174,14 +179,16 @@ const Auth = () => {
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
                   className={cn(
-                    'w-full h-12 pl-12 pr-12 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300',
-                    errors.password ? 'border-destructive' : 'border-border focus:border-primary'
+                    "w-full h-12 pl-12 pr-12 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300",
+                    errors.password
+                      ? "border-destructive"
+                      : "border-border focus:border-primary"
                   )}
                 />
                 <button
@@ -189,11 +196,17 @@ const Auth = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-sm text-destructive">{errors.password}</p>
+                <p className="mt-1 text-sm text-destructive">
+                  {errors.password}
+                </p>
               )}
             </div>
 
@@ -205,19 +218,23 @@ const Auth = () => {
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="••••••••"
                     className={cn(
-                      'w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300',
-                      errors.confirmPassword ? 'border-destructive' : 'border-border focus:border-primary'
+                      "w-full h-12 pl-12 pr-4 rounded-xl bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300",
+                      errors.confirmPassword
+                        ? "border-destructive"
+                        : "border-border focus:border-primary"
                     )}
                   />
                 </div>
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-destructive">{errors.confirmPassword}</p>
+                  <p className="mt-1 text-sm text-destructive">
+                    {errors.confirmPassword}
+                  </p>
                 )}
               </div>
             )}
@@ -234,7 +251,7 @@ const Auth = () => {
             )}
 
             <Button type="submit" variant="nature" size="lg" className="w-full">
-              {isLogin ? 'Sign In' : 'Create Account'}
+              {isLogin ? "Sign In" : "Create Account"}
             </Button>
           </form>
 
@@ -272,7 +289,11 @@ const Auth = () => {
               Google
             </Button>
             <Button variant="outline" className="h-12">
-              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
               GitHub
@@ -280,7 +301,7 @@ const Auth = () => {
           </div>
 
           <p className="mt-8 text-center text-muted-foreground">
-            {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
+            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
             <button
               type="button"
               onClick={() => {
@@ -289,7 +310,7 @@ const Auth = () => {
               }}
               className="text-primary font-medium hover:underline"
             >
-              {isLogin ? 'Sign Up' : 'Sign In'}
+              {isLogin ? "Sign Up" : "Sign In"}
             </button>
           </p>
         </div>

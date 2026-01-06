@@ -1,61 +1,49 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { Plant } from '@/data/plants';
+import { createContext, useContext, useState } from "react";
 
-export interface CartItem extends Plant {
-  quantity: number;
-}
+const CartContext = createContext(null);
 
-interface CartContextType {
-  items: CartItem[];
-  addToCart: (plant: Plant) => void;
-  removeFromCart: (plantId: string) => void;
-  updateQuantity: (plantId: string, quantity: number) => void;
-  clearCart: () => void;
-  totalItems: number;
-  totalPrice: number;
-}
+export const CartProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
-
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
-
-  const addToCart = useCallback((plant: Plant) => {
+  const addToCart = (plant) => {
     setItems((prev) => {
-      const existing = prev.find((item) => item.id === plant.id);
-      if (existing) {
+      const found = prev.find((item) => item.id === plant.id);
+
+      if (found) {
         return prev.map((item) =>
-          item.id === plant.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          item.id === plant.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
+
       return [...prev, { ...plant, quantity: 1 }];
     });
-  }, []);
+  };
 
-  const removeFromCart = useCallback((plantId: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== plantId));
-  }, []);
+  const removeFromCart = (id) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  };
 
-  const updateQuantity = useCallback((plantId: string, quantity: number) => {
+  const updateQuantity = (id, quantity) => {
     if (quantity <= 0) {
-      removeFromCart(plantId);
+      removeFromCart(id);
       return;
     }
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === plantId ? { ...item, quantity } : item
-      )
-    );
-  }, [removeFromCart]);
 
-  const clearCart = useCallback(() => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  };
+
+  const clearCart = () => {
     setItems([]);
-  }, []);
+  };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const totalPrice = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <CartContext.Provider
@@ -75,9 +63,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 };
 
 export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+  const cart = useContext(CartContext);
+
+  if (!cart) {
+    throw new Error("useCart must be used inside CartProvider");
   }
-  return context;
+
+  return cart;
 };

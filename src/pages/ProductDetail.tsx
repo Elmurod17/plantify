@@ -1,33 +1,29 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Star, ShoppingCart, Heart, Minus, Plus, ChevronLeft, Sun, Droplets, Leaf, CheckCircle } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { plants } from '@/data/plants';
-import { Button } from '@/components/ui/button';
-import { useCart } from '@/context/CartContext';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import PlantCard from '@/components/PlantCard';
+import { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { plants } from "@/data/plants";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
+import PlantCard from "@/components/PlantCard";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const plant = plants.find((p) => p.id === id);
   const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const { addToCart } = useCart();
-  const { toast } = useToast();
 
   if (!plant) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="font-display text-2xl font-bold mb-4">Plant not found</h1>
+        <main className="container mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-bold mb-4">Plant not found</h1>
           <Link to="/shop">
-            <Button variant="nature">Back to Shop</Button>
+            <Button>Back to shop</Button>
           </Link>
-        </div>
+        </main>
         <Footer />
       </div>
     );
@@ -37,10 +33,6 @@ const ProductDetail = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart(plant);
     }
-    toast({
-      title: 'Added to cart! 🌿',
-      description: `${quantity} x ${plant.name} added to your cart.`,
-    });
   };
 
   const relatedPlants = plants
@@ -50,170 +42,80 @@ const ProductDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto px-4 py-8">
-        <Link
-          to="/shop"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 mb-8"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          Back to Shop
+
+      <main className="container mx-auto px-4 py-10">
+        <Link to="/shop" className="text-sm text-muted-foreground">
+          ← Back to shop
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          <div className="relative aspect-square rounded-3xl overflow-hidden bg-secondary shadow-card">
-            <img
-              src={plant.image}
-              alt={plant.name}
-              className="w-full h-full object-cover"
-            />
-            {plant.originalPrice && (
-              <span className="absolute top-4 left-4 px-4 py-2 rounded-full bg-destructive text-destructive-foreground font-semibold">
-                Sale
-              </span>
-            )}
-          </div>
+        <div className="grid lg:grid-cols-2 gap-10 mt-6 mb-16">
+          <img
+            src={plant.image}
+            alt={plant.name}
+            className="w-full h-96 object-cover rounded-lg"
+          />
 
-          <div className="space-y-6">
-            <span className="inline-block px-3 py-1 rounded-full bg-leaf-light text-leaf-dark text-sm font-medium capitalize">
-              {plant.category}
-            </span>
-
-            <div>
-              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
-                {plant.name}
-              </h1>
-              <p className="text-muted-foreground italic">{plant.scientificName}</p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={cn(
-                      'w-5 h-5',
-                      i < Math.floor(plant.rating)
-                        ? 'fill-amber-400 text-amber-400'
-                        : 'fill-muted text-muted'
-                    )}
-                  />
-                ))}
-              </div>
-              <span className="font-medium">{plant.rating}</span>
-              <span className="text-muted-foreground">({plant.reviewCount} reviews)</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <span className="text-3xl font-bold text-primary">
-                ${plant.price.toFixed(2)}
-              </span>
-              {plant.originalPrice && (
-                <span className="text-xl text-muted-foreground line-through">
-                  ${plant.originalPrice.toFixed(2)}
-                </span>
-              )}
-            </div>
-
-            <p className="text-muted-foreground leading-relaxed">
-              {plant.description}
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{plant.name}</h1>
+            <p className="text-sm text-muted-foreground mb-4">
+              {plant.scientificName}
             </p>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-secondary text-center">
-                <Sun className="w-6 h-6 mx-auto mb-2 text-amber-500" />
-                <p className="text-sm font-medium text-foreground">Light</p>
-                <p className="text-xs text-muted-foreground">{plant.light}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-secondary text-center">
-                <Droplets className="w-6 h-6 mx-auto mb-2 text-blue-500" />
-                <p className="text-sm font-medium text-foreground">Water</p>
-                <p className="text-xs text-muted-foreground">{plant.water}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-secondary text-center">
-                <Leaf className="w-6 h-6 mx-auto mb-2 text-leaf" />
-                <p className="text-sm font-medium text-foreground">Care Level</p>
-                <p className="text-xs text-muted-foreground capitalize">{plant.careLevel}</p>
-              </div>
+            <p className="text-lg font-semibold mb-4">
+              ${plant.price.toFixed(2)}
+            </p>
+
+            <p className="text-muted-foreground mb-6">{plant.description}</p>
+
+            <div className="mb-6">
+              <p className="text-sm">
+                <strong>Light:</strong> {plant.light}
+              </p>
+              <p className="text-sm">
+                <strong>Water:</strong> {plant.water}
+              </p>
+              <p className="text-sm">
+                <strong>Care:</strong> {plant.careLevel}
+              </p>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {plant.petFriendly && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-mint/30 text-forest text-sm">
-                  <CheckCircle className="w-4 h-4" />
-                  Pet Friendly
-                </span>
-              )}
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary text-muted-foreground text-sm capitalize">
-                {plant.size} size
-              </span>
-              {plant.inStock ? (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-leaf-light text-leaf-dark text-sm">
-                  <CheckCircle className="w-4 h-4" />
-                  In Stock
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-destructive/10 text-destructive text-sm">
-                  Out of Stock
-                </span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-4 pt-4">
-              <div className="flex items-center gap-2 bg-secondary rounded-xl p-1">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-background transition-colors duration-300"
-                >
-                  <Minus className="w-5 h-5" />
-                </button>
-                <span className="w-12 text-center font-semibold">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-background transition-colors duration-300"
-                >
-                  <Plus className="w-5 h-5" />
-                </button>
-              </div>
-
-              <Button
-                variant="nature"
-                size="lg"
-                className="flex-1"
-                onClick={handleAddToCart}
-                disabled={!plant.inStock}
+            <div className="flex items-center gap-3 mb-6">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="border px-3 py-2"
               >
-                <ShoppingCart className="w-5 h-5" />
-                Add to Cart
-              </Button>
+                <Minus className="w-4 h-4" />
+              </button>
 
-              <Button
-                variant="outline"
-                size="icon"
-                className={cn(
-                  'h-12 w-12',
-                  isWishlisted && 'border-destructive text-destructive'
-                )}
-                onClick={() => setIsWishlisted(!isWishlisted)}
+              <span className="w-8 text-center">{quantity}</span>
+
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="border px-3 py-2"
               >
-                <Heart className={cn('w-5 h-5', isWishlisted && 'fill-current')} />
-              </Button>
+                <Plus className="w-4 h-4" />
+              </button>
             </div>
+
+            <Button onClick={handleAddToCart} disabled={!plant.inStock}>
+              <ShoppingCart className="w-4 h-4 mr-2" />
+              Add to cart
+            </Button>
           </div>
         </div>
-
         {relatedPlants.length > 0 && (
           <section>
-            <h2 className="font-display text-2xl font-bold text-foreground mb-8">
-              You May Also Like
-            </h2>
+            <h2 className="text-2xl font-bold mb-6">Related plants</h2>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedPlants.map((relatedPlant) => (
-                <PlantCard key={relatedPlant.id} plant={relatedPlant} />
+              {relatedPlants.map((p) => (
+                <PlantCard key={p.id} plant={p} />
               ))}
             </div>
           </section>
         )}
       </main>
+
       <Footer />
     </div>
   );
