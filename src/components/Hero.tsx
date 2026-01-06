@@ -8,11 +8,6 @@ const Hero = () => {
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-leaf/10 text-leaf-dark">
-              <Leaf className="w-4 h-4" />
-              <span className="text-sm">Sustainably Grown</span>
-            </div>
-
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest mb-6">
               Bring Nature <br /> Into Your Home
             </h1>
@@ -42,21 +37,6 @@ const Hero = () => {
                   Browse Categories
                 </Button>
               </Link>
-            </div>
-
-            <div className="flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Truck className="w-5 h-5 text-leaf" />
-                Free Shipping
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-leaf" />
-                30-Day Guarantee
-              </div>
-              <div className="flex items-center gap-2">
-                <Leaf className="w-5 h-5 text-leaf" />
-                Expert Care Tips
-              </div>
             </div>
           </div>
 
